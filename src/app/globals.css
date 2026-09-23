@@ -8,9 +8,9 @@
   --bg-primary: #070d1e;
   --bg-secondary: #0d1b3e;
   --bg-card: rgba(18, 30, 66, 0.7);
-  --bg-card-hover: rgba(28, 45, 96, 0.85);
-  --border-glass: rgba(100, 150, 255, 0.15);
-  --border-glow: rgba(72, 202, 228, 0.4);
+  --bg-card-hover: rgba(28, 45, 96, 0.9);
+  --border-glass: rgba(100, 150, 255, 0.16);
+  --border-glow: rgba(76, 201, 240, 0.5);
 
   --accent-cyan: #4cc9f0;
   --accent-blue: #4361ee;
@@ -30,8 +30,8 @@
 
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
   --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.35);
-  --shadow-glow: 0 0 25px rgba(67, 97, 238, 0.35);
-  --shadow-glow-cyan: 0 0 25px rgba(76, 201, 240, 0.35);
+  --shadow-glow: 0 0 30px rgba(67, 97, 238, 0.4);
+  --shadow-glow-cyan: 0 0 30px rgba(76, 201, 240, 0.4);
 
   --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -50,9 +50,9 @@ body {
   font-family: var(--font-body);
   background-color: var(--bg-primary);
   background-image: 
-    radial-gradient(circle at 15% 15%, rgba(67, 97, 238, 0.16) 0%, transparent 45%),
-    radial-gradient(circle at 85% 25%, rgba(76, 201, 240, 0.14) 0%, transparent 40%),
-    radial-gradient(circle at 50% 80%, rgba(114, 9, 183, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 15% 15%, rgba(67, 97, 238, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 85% 25%, rgba(76, 201, 240, 0.16) 0%, transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(114, 9, 183, 0.12) 0%, transparent 50%),
     linear-gradient(180deg, #070d1e 0%, #0d1b3e 50%, #070d1e 100%);
   background-attachment: fixed;
   color: var(--text-main);
@@ -60,6 +60,48 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* Ambient Floating Background Orbs */
+.ambient-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.45;
+  animation: floatOrb 12s ease-in-out infinite alternate;
+}
+
+.ambient-orb-1 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(67, 97, 238, 0.45) 0%, rgba(76, 201, 240, 0.15) 70%, transparent 100%);
+  top: 5%;
+  left: 5%;
+  animation-duration: 14s;
+}
+
+.ambient-orb-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(114, 9, 183, 0.35) 0%, rgba(67, 97, 238, 0.1) 70%, transparent 100%);
+  bottom: 10%;
+  right: 5%;
+  animation-duration: 18s;
+}
+
+@keyframes floatOrb {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(30px, -40px) scale(1.08);
+  }
+  100% {
+    transform: translate(-25px, 35px) scale(0.95);
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -74,11 +116,11 @@ a {
   text-decoration: none;
 }
 
-/* Animations */
+/* Keyframe Animations */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -91,16 +133,7 @@ a {
   to { opacity: 1; }
 }
 
-@keyframes floatOrbs {
-  0%, 100% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(-10px) scale(1.02);
-  }
-}
-
-@keyframes shimmerGlow {
+@keyframes shimmerEffect {
   0% {
     background-position: -200% 0;
   }
@@ -109,9 +142,13 @@ a {
   }
 }
 
-@keyframes pulseSubtle {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.65; }
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(76, 201, 240, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(76, 201, 240, 0.6);
+  }
 }
 
 .animate-fade-in {
@@ -122,8 +159,8 @@ a {
   animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.animate-float {
-  animation: floatOrbs 6s ease-in-out infinite;
+.animate-pulse-glow {
+  animation: pulseGlow 3s infinite ease-in-out;
 }
 
 /* Glassmorphic Panels */
@@ -135,6 +172,8 @@ a {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   transition: var(--transition-smooth);
+  position: relative;
+  z-index: 1;
 }
 
 .glass-panel:hover {
@@ -154,9 +193,9 @@ a {
 
 .glass-card:hover {
   background: var(--bg-card-hover);
-  transform: translateY(-5px);
-  border-color: rgba(76, 201, 240, 0.4);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.45);
+  transform: translateY(-6px);
+  border-color: rgba(76, 201, 240, 0.45);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.45);
 }
 
 /* Buttons */
@@ -174,18 +213,18 @@ a {
   cursor: pointer;
   transition: var(--transition-smooth);
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-primary {
   background: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
   color: #ffffff;
   box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
-  position: relative;
-  overflow: hidden;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.02);
   box-shadow: 0 8px 25px rgba(76, 201, 240, 0.5);
   background: linear-gradient(135deg, #3753e0 0%, #3bbce5 100%);
 }
@@ -212,8 +251,8 @@ a {
 
 .btn-outline-white:hover {
   background: #e2e8f0;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 22px rgba(255, 255, 255, 0.28);
 }
 
 /* Badge System */
@@ -228,6 +267,10 @@ a {
   padding: 0.25rem 0.65rem;
   border-radius: var(--radius-full);
   transition: var(--transition-smooth);
+}
+
+.badge:hover {
+  transform: scale(1.05);
 }
 
 .badge-ikea {
@@ -330,6 +373,8 @@ a {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .grid-3 {
@@ -358,21 +403,22 @@ a {
   to { transform: rotate(360deg); }
 }
 
-/* Document specific Planner Cards */
+/* Planner Cards */
 .screenshot-card {
   background: #ffffff;
   color: #1e293b;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
   display: flex;
   flex-direction: column;
   transition: var(--transition-smooth);
+  position: relative;
 }
 
 .screenshot-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.55);
 }
 
 .screenshot-card-header {

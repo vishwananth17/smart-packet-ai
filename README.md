@@ -1,6 +1,21 @@
-# PocketSmart AI: Intelligent Cross-Platform Budget Recommendation System
+<p align="center">
+  <img src="public/banner-animated.svg" alt="PocketSmart AI Animated Banner" width="100%" />
+</p>
 
-## Overview
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Outfit&weight=600&size=24&duration=3000&pause=1000&color=4CC9F0&center=true&vCenter=true&width=750&height=50&lines=AI-Powered+Budget+Planning+for+Everyday+Needs;Home+Interior+Budget+Planner+(IKEA+%26+Amazon);Party+%26+Event+Budget+Allocation+(Swiggy+%26+Zomato);Multimodal+Jewelry+Vision+Stylist+(Gemini+1.5+Flash)" alt="PocketSmart AI Typing Header" />
+</p>
+
+<p align="center">
+  <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js_15-Vercel_Serverless-black?style=for-the-badge&logo=next.js" alt="Next.js 15" /></a>
+  <a href="https://deepmind.google/technologies/gemini/"><img src="https://img.shields.io/badge/Google_Gemini-1.5_Flash_Pro-4361EE?style=for-the-badge&logo=google" alt="Gemini 1.5 Flash" /></a>
+  <a href="https://fastapi.tiangolo.com"><img src="https://img.shields.io/badge/FastAPI-Python_Backend-009688?style=for-the-badge&logo=fastapi" alt="FastAPI" /></a>
+  <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-5.7-3178C6?style=for-the-badge&logo=typescript" alt="TypeScript" /></a>
+</p>
+
+---
+
+## Executive Summary
 
 PocketSmart AI is an artificial intelligence-driven recommendation platform designed to automate and optimize lifestyle budget allocations. By integrating Google's Gemini 1.5 Flash foundation model with cross-platform e-commerce search paradigms, the system generates structured, price-constrained product and service recommendations across three lifestyle domains:
 
@@ -12,51 +27,32 @@ The system features dual deployment capabilities: a high-performance Next.js 15 
 
 ---
 
-## Architecture
+## System Architecture
 
-### System Flow Diagram
+```mermaid
+graph TD
+    Client[User Client / Browser] -->|HTTP POST| Gateway[Next.js 15 / FastAPI API Gateway]
+    Gateway --> Router{Request Domain Router}
 
-```
-+---------------------------------------------------------------------------------+
-|                                USER INTERFACE                                   |
-|   Next.js 15 (React 19) / Responsive Glassmorphic UI / Jinja2 Template Engine   |
-+---------------------------------------------------------------------------------+
-                                      |
-                                      v
-+---------------------------------------------------------------------------------+
-|                               API GATEWAY LAYER                                 |
-|         POST /api/generate-home  |  POST /api/generate-party                   |
-|         POST /api/generate-jewelry  |  POST /api/auth                           |
-+---------------------------------------------------------------------------------+
-                                      |
-         +----------------------------+----------------------------+
-         |                                                         |
-         v                                                         v
-+------------------------------------+   +---------------------------------------+
-|     MULTIMODAL AI SERVICE          |   |       ALGORITHMIC FALLBACK            |
-|   Google Gemini 1.5 Flash Engine   |   |        SYNTHESIS ENGINE               |
-|   - Vision: Outfit feature parsing |   |   - Strict category budget bounds     |
-|   - Text: Contextual prompt logic  |   |   - Platform catalog mapping          |
-+------------------------------------+   +---------------------------------------+
-                                      |
-                                      v
-+---------------------------------------------------------------------------------+
-|                        NORMALIZED RECOMMENDATION ENGINE                         |
-|   - Budget Adherence Verification (Price <= Budget Ceiling)                     |
-|   - Multi-Vendor Price Allocation (Catering, Venue, Decor, Furniture)           |
-|   - Session State & History Persistence (LocalStorage / JWT Token Store)        |
-+---------------------------------------------------------------------------------+
-                                      |
-                                      v
-+---------------------------------------------------------------------------------+
-|                          CROSS-PLATFORM SOURCING                                |
-|        Amazon  |  Flipkart  |  IKEA  |  Pepperfry  |  Swiggy  |  Zomato  |  OYO |
-+---------------------------------------------------------------------------------+
+    Router -->|/api/generate-home| HomeEngine[Home Interior Recommendation Engine]
+    Router -->|/api/generate-party| PartyEngine[Party Budget Proportional Engine]
+    Router -->|/api/generate-jewelry| VisionEngine[Multimodal Outfit Vision Engine]
+
+    HomeEngine --> GeminiClient[Gemini 1.5 Flash Foundation Model]
+    PartyEngine --> GeminiClient
+    VisionEngine --> GeminiClient
+
+    GeminiClient -->|Payload Fallback if Quota Exhausted| FallbackGen[Algorithmic Fallback Engine]
+    GeminiClient --> Validator[Normalized Price & Schema Validator]
+    FallbackGen --> Validator
+
+    Validator --> VendorMapping[Multi-Vendor E-Commerce Sourcing]
+    VendorMapping --> SourcedPlatforms[Amazon / IKEA / Flipkart / Swiggy / Zomato / OYO / Tanishq]
 ```
 
 ---
 
-## Core Modules
+## Core Functional Modules
 
 ### 1. Home Interior Budget Planner (`/home-planner`)
 - **Input Parameters**: Total budget (INR/USD), target rooms (Living Room, Bedroom, Kitchen, Dining Room, Home Office, Balcony), design style (Modern Contemporary, Minimalist, Scandinavian, Traditional Indian, Bohemian, Industrial), and specific fixture quantities.
@@ -95,7 +91,7 @@ The system features dual deployment capabilities: a high-performance Next.js 15 
 | Layer | Technologies |
 | :--- | :--- |
 | **Frontend Framework** | Next.js 15 (App Router), React 19, TypeScript |
-| **Styling & Design System** | Vanilla CSS3, Custom Glassmorphism, Responsive CSS Grid, Inter/Outfit Typography |
+| **Styling & Design System** | Vanilla CSS3, Ambient Floating Orbs, Responsive CSS Grid, Inter/Outfit Typography |
 | **Icons & Micro-Interactions** | Lucide React |
 | **AI Foundation Model** | Google Gemini 1.5 Flash (`gemini-1.5-flash`), Multimodal Vision API |
 | **Secondary Backend** | Python 3.10+, FastAPI, Uvicorn, Pydantic v2, Jinja2 Templates |
@@ -186,52 +182,6 @@ Accepts text preferences and an optional base64 image payload to perform multimo
   "outfitImageBase64": "data:image/jpeg;base64,...",
   "outfitImageMimeType": "image/jpeg"
 }
-```
-
----
-
-## Project Structure
-
-```
-PACKETSMARTAI/
-|-- src/
-|   |-- app/
-|   |   |-- api/
-|   |   |   |-- generate-home/route.ts       # Interior AI generation API
-|   |   |   |-- generate-party/route.ts      # Party allocation API
-|   |   |   `-- generate-jewelry/route.ts    # Multimodal jewelry vision API
-|   |   |-- auth/page.tsx                    # Authentication and session access
-|   |   |-- history/page.tsx                 # Recommendation logs and history
-|   |   |-- home-planner/page.tsx            # Home Interior Planner UI
-|   |   |-- party-planner/page.tsx           # Party Budget Planner UI
-|   |   |-- jewelry-planner/page.tsx         # Multimodal Jewelry Planner UI
-|   |   |-- globals.css                      # Design system and animations
-|   |   |-- layout.tsx                       # Main layout wrapper
-|   |   `-- page.tsx                         # Landing page and simulator
-|   |-- components/
-|   |   |-- Navbar.tsx                       # Global navigation
-|   |   |-- Footer.tsx                       # Platform links and credits
-|   |   |-- BudgetGauge.tsx                  # Budget tracking component
-|   |   `-- PlatformBadge.tsx                # Vendor identification badges
-|   `-- lib/
-|       |-- gemini.ts                        # Gemini 1.5 Flash client
-|       |-- mockData.ts                      # Fallback data synthesis
-|       |-- storage.ts                       # Local persistence layer
-|       `-- types.ts                         # TypeScript definitions
-|-- backend/                                 # Python FastAPI Reference Module
-|   |-- app.py                               # FastAPI application router
-|   |-- main.py                              # Application entrypoint
-|   |-- gemini_utils.py                      # Python Gemini API connector
-|   |-- schemas.py                           # Pydantic data schemas
-|   |-- auth.py                              # JWT authentication service
-|   |-- requirements.txt                     # Python backend dependencies
-|   `-- templates/                           # Standalone Jinja2 templates
-|-- package.json                             # Node.js project manifest
-|-- tsconfig.json                            # TypeScript configuration
-|-- next.config.mjs                          # Next.js build configuration
-|-- vercel.json                              # Vercel deployment manifest
-|-- .gitignore                               # Git exclusion definitions
-`-- README.md                                # System documentation
 ```
 
 ---

@@ -33,9 +33,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <body style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        {/* Ambient floating blur orbs */}
+        <div className="ambient-orb ambient-orb-1" aria-hidden="true" />
+        <div className="ambient-orb ambient-orb-2" aria-hidden="true" />
+
         <Navbar />
-        <main style={{ flex: 1 }}>{children}</main>
+        <main style={{ flex: 1, position: 'relative', zIndex: 1 }}>{children}</main>
         <Footer />
       </body>
     </html>

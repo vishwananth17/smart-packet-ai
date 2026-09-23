@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070d1e" />
+      <stop offset="50%" stop-color="#0d1b3e" />
+      <stop offset="100%" stop-color="#070d1e" />
+    </linearGradient>
+
+    <linearGradient id="cyanBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4361ee" />
+      <stop offset="100%" stop-color="#4cc9f0" />
+    </linearGradient>
+
+    <linearGradient id="neonGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4361ee" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#4cc9f0" stop-opacity="1" />
+      <stop offset="100%" stop-color="#7209b7" stop-opacity="0.8" />
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="softBlur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="25" />
+    </filter>
+
+    <style>
+      @keyframes pulseGlow {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 0.65; transform: scale(1.08); }
+      }
+      @keyframes packetFlow {
+        0% { stroke-dashoffset: 200; }
+        100% { stroke-dashoffset: 0; }
+      }
+      @keyframes floatSlow {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-6px); }
+      }
+      @keyframes textShimmer {
+        0% { stop-color: #4cc9f0; }
+        50% { stop-color: #7209b7; }
+        100% { stop-color: #4cc9f0; }
+      }
+      .orb-1 { animation: pulseGlow 6s ease-in-out infinite; transform-origin: 200px 100px; }
+      .orb-2 { animation: pulseGlow 8s ease-in-out infinite 2s; transform-origin: 700px 200px; }
+      .flow-line { stroke-dasharray: 8 6; animation: packetFlow 3s linear infinite; }
+      .card-float { animation: floatSlow 4s ease-in-out infinite; }
+      .card-float-2 { animation: floatSlow 5s ease-in-out infinite 1s; }
+      .card-float-3 { animation: floatSlow 4.5s ease-in-out infinite 2s; }
+    </style>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="900" height="320" rx="16" fill="url(#bgGrad)" stroke="#1c2d5a" stroke-width="2" />
+
+  <!-- Ambient Blurred Glow Spheres -->
+  <circle class="orb-1" cx="220" cy="120" r="140" fill="#4361ee" filter="url(#softBlur)" />
+  <circle class="orb-2" cx="680" cy="180" r="160" fill="#7209b7" filter="url(#softBlur)" />
+
+  <!-- Connecting Flow Lines -->
+  <path class="flow-line" d="M 450 150 L 160 230" fill="none" stroke="#4cc9f0" stroke-width="2" opacity="0.6" />
+  <path class="flow-line" d="M 450 150 L 450 230" fill="none" stroke="#4361ee" stroke-width="2" opacity="0.6" />
+  <path class="flow-line" d="M 450 150 L 740 230" fill="none" stroke="#7209b7" stroke-width="2" opacity="0.6" />
+
+  <!-- Center Core AI Hub -->
+  <g transform="translate(450, 100)" text-anchor="middle">
+    <rect x="-180" y="-45" width="360" height="85" rx="42" fill="#0b1736" stroke="#4cc9f0" stroke-width="2" filter="url(#glow)" />
+    <text y="-8" fill="#ffffff" font-family="'Outfit', 'Segoe UI', sans-serif" font-weight="800" font-size="28" letter-spacing="1">
+      Pocket<tspan fill="#4cc9f0">Smart</tspan> AI
+    </text>
+    <text y="22" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="12" letter-spacing="2">
+      POWERED BY GEMINI 1.5 FLASH PRO
+    </text>
+  </g>
+
+  <!-- Module Card 1: Home Interior -->
+  <g class="card-float" transform="translate(160, 245)">
+    <rect x="-105" y="-35" width="210" height="70" rx="12" fill="#0e1a38" stroke="#4cc9f0" stroke-width="1.5" />
+    <text x="0" y="-8" fill="#ffffff" font-family="'Outfit', sans-serif" font-weight="700" font-size="14" text-anchor="middle">
+      Home Interior
+    </text>
+    <text x="0" y="14" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" text-anchor="middle">
+      IKEA • Amazon • Pepperfry
+    </text>
+  </g>
+
+  <!-- Module Card 2: Party Planner -->
+  <g class="card-float-2" transform="translate(450, 245)">
+    <rect x="-105" y="-35" width="210" height="70" rx="12" fill="#0e1a38" stroke="#4361ee" stroke-width="1.5" />
+    <text x="0" y="-8" fill="#ffffff" font-family="'Outfit', sans-serif" font-weight="700" font-size="14" text-anchor="middle">
+      Party &amp; Events
+    </text>
+    <text x="0" y="14" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" text-anchor="middle">
+      Swiggy • Zomato • OYO
+    </text>
+  </g>
+
+  <!-- Module Card 3: Multimodal Jewelry -->
+  <g class="card-float-3" transform="translate(740, 245)">
+    <rect x="-105" y="-35" width="210" height="70" rx="12" fill="#0e1a38" stroke="#7209b7" stroke-width="1.5" />
+    <text x="0" y="-8" fill="#ffffff" font-family="'Outfit', sans-serif" font-weight="700" font-size="14" text-anchor="middle">
+      Jewelry &amp; Outfit
+    </text>
+    <text x="0" y="14" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" text-anchor="middle">
+      Multimodal Vision • Tanishq
+    </text>
+  </g>
+</svg>
