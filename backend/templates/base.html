@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}PocketSmart AI - AI-Powered Budget Planning{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070d1e;
+      --card-bg: rgba(18, 30, 66, 0.7);
+      --accent-cyan: #4cc9f0;
+      --accent-blue: #4361ee;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-dark);
+      background-image: radial-gradient(circle at 20% 20%, rgba(67, 97, 238, 0.2) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 30%, rgba(76, 201, 240, 0.15) 0%, transparent 40%),
+                        linear-gradient(180deg, #070d1e 0%, #0d1b3e 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    h1, h2, h3 { font-family: 'Outfit', sans-serif; }
+    .nav {
+      background: rgba(7, 13, 30, 0.85);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav a { color: var(--text-main); text-decoration: none; margin: 0 0.75rem; font-size: 0.9rem; }
+    .nav a:hover, .nav a.active { color: var(--accent-cyan); }
+    .brand { font-size: 1.25rem; font-weight: 800; }
+    .brand span { color: var(--accent-cyan); }
+    .container { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    .btn {
+      display: inline-block;
+      padding: 0.65rem 1.25rem;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary { background: linear-gradient(135deg, #4361ee, #4cc9f0); color: #fff; }
+    .btn-secondary { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.15); }
+    .panel {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 2rem;
+      backdrop-filter: blur(12px);
+    }
+    .input-field, select, textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: rgba(11,20,48,0.8);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      color: #fff;
+      margin-top: 0.35rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <div class="nav">
+    <a href="/" class="brand">Pocket<span>Smart</span> AI</a>
+    <div>
+      <a href="/home-planner">Home Interior</a>
+      <a href="/party-planner">Party Planner</a>
+      <a href="/jewelry-planner">Jewelry & Outfit</a>
+    </div>
+  </div>
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

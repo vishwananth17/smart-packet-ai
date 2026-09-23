@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Jewelry Budget Planner - PocketSmart AI{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+  <h1 style="margin-bottom: 0.5rem;">Jewelry Budget Planner</h1>
+  <p style="color: #94a3b8; margin-bottom: 2rem;">Multimodal outfit image analysis paired with style-coordinated jewelry from Tanishq, CaratLane, and Amazon.</p>
+
+  <div class="panel">
+    <form id="jewelryForm">
+      <label>Jewelry Budget (₹ INR):</label>
+      <input type="number" id="budget" class="input-field" value="40000" required>
+
+      <label>Occasion:</label>
+      <select id="occasion">
+        <option value="Wedding / Reception">Wedding / Reception</option>
+        <option value="Engagement">Engagement</option>
+        <option value="Festive (Diwali/Eid)">Festive (Diwali/Eid)</option>
+        <option value="Cocktail Gala">Cocktail Gala</option>
+      </select>
+
+      <label>Style:</label>
+      <select id="style">
+        <option value="Traditional Indian & Heritage">Traditional Indian & Heritage</option>
+        <option value="Kundan & Polki Royal">Kundan & Polki Royal</option>
+        <option value="Minimalist Contemporary">Minimalist Contemporary</option>
+        <option value="South Indian Temple">South Indian Temple</option>
+      </select>
+
+      <label>Outfit Photo (Multimodal Upload):</label>
+      <input type="file" id="outfitPhoto" accept="image/*" class="input-field">
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Curate Jewelry Set</button>
+    </form>
+  </div>
+
+  <div id="results" style="margin-top: 2rem; display: none;" class="panel">
+    <h2 style="color: #c084fc; margin-bottom: 1rem;">Curated Jewelry Collection</h2>
+    <div id="aestheticBox" style="background: rgba(114,9,183,0.15); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;"></div>
+    <div id="outputContent"></div>
+  </div>
+</div>
+
+<script>
+  let base64Image = null;
+  document.getElementById('outfitPhoto').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => { base64Image = reader.result; };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  document.getElementById('jewelryForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.innerText = 'Analyzing with Gemini 1.5 Flash Vision...';
+    btn.disabled = true;
+
+    const payload = {
+      budget: parseFloat(document.getElementById('budget').value),
+      currency: 'INR',
+      occasion: document.getElementById('occasion').value,
+      style: document.getElementById('style').value,
+      outfitImageBase64: base64Image || undefined
+    };
+
+    try {
+      const res = await fetch('/generate-jewelry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      document.getElementById('results').style.display = 'block';
+      if (data.aestheticAnalysis) {
+        document.getElementById('aestheticBox').innerHTML = `
+          <strong>AI Aesthetic Analysis:</strong><br>
+          • Colors: ${data.aestheticAnalysis.outfitColorsDetected.join(', ')}<br>
+          • Neckline: ${data.aestheticAnalysis.necklineDetected}<br>
+          • Metal: ${data.aestheticAnalysis.recommendedMetal}
+        `;
+      }
+      let html = `<p><strong>Total Estimated:</strong> ₹${data.totalEstimatedCost} / ₹${data.totalBudget}</p><br>`;
+      data.recommendations.forEach(r => {
+        html += `<div style="background: rgba(0,0,0,0.3); padding: 0.75rem; border-radius: 8px; margin: 0.5rem 0;">
+                  <span style="color: #c084fc; font-weight: 700;">${r.pieceType}</span><br>
+                  <strong>${r.item.name}</strong> (${r.item.platform}) - ₹${r.item.price}<br>
+                  <small style="color: #94a3b8;">${r.item.description}</small>
+                 </div>`;
+      });
+      document.getElementById('outputContent').innerHTML = html;
+    } catch(err) {
+      alert('Error communicating with backend');
+    } finally {
+      btn.innerText = 'Curate Jewelry Set';
+      btn.disabled = false;
+    }
+  });
+</script>
+{% endblock %}

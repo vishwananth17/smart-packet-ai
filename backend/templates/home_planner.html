@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Home Interior Budget Planner - PocketSmart AI{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+  <h1 style="margin-bottom: 0.5rem;">Home Interior Budget Planner</h1>
+  <p style="color: #94a3b8; margin-bottom: 2rem;">Specify room, style, and budget to receive recommendations from IKEA, Amazon, and Pepperfry.</p>
+
+  <div class="panel">
+    <form id="homeForm">
+      <label>Budget (₹ INR):</label>
+      <input type="number" id="budget" class="input-field" value="50000" required>
+
+      <label>Rooms (comma-separated):</label>
+      <input type="text" id="rooms" class="input-field" value="Living Room, Master Bedroom" required>
+
+      <label>Style Theme:</label>
+      <select id="style">
+        <option value="Modern Contemporary">Modern Contemporary</option>
+        <option value="Minimalist">Minimalist</option>
+        <option value="Scandinavian">Scandinavian</option>
+        <option value="Traditional Indian">Traditional Indian</option>
+      </select>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Generate Recommendations</button>
+    </form>
+  </div>
+
+  <div id="results" style="margin-top: 2rem; display: none;" class="panel">
+    <h2 style="color: #4cc9f0; margin-bottom: 1rem;">Recommendations</h2>
+    <div id="outputContent"></div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('homeForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.innerText = 'Calculating with Gemini 1.5 Flash...';
+    btn.disabled = true;
+
+    const payload = {
+      budget: parseFloat(document.getElementById('budget').value),
+      currency: 'INR',
+      rooms: document.getElementById('rooms').value.split(',').map(s => s.trim()),
+      style: document.getElementById('style').value
+    };
+
+    try {
+      const res = await fetch('/generate-home', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      document.getElementById('results').style.display = 'block';
+      let html = `<p><strong>Total Estimated:</strong> ₹${data.totalEstimatedCost} / ₹${data.totalBudget}</p><br>`;
+      data.roomBreakdowns.forEach(r => {
+        html += `<h3 style="color: #4cc9f0; margin-top: 1rem;">${r.room}</h3>`;
+        r.items.forEach(it => {
+          html += `<div style="background: rgba(0,0,0,0.3); padding: 0.75rem; border-radius: 8px; margin: 0.5rem 0;">
+                    <strong>${it.name}</strong> (${it.platform}) - ₹${it.price}<br>
+                    <small style="color: #94a3b8;">${it.description}</small>
+                   </div>`;
+        });
+      });
+      document.getElementById('outputContent').innerHTML = html;
+    } catch(err) {
+      alert('Error communicating with backend');
+    } finally {
+      btn.innerText = 'Generate Recommendations';
+      btn.disabled = false;
+    }
+  });
+</script>
+{% endblock %}
