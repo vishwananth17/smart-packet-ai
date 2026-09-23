@@ -15,6 +15,8 @@ import {
   Camera,
   CheckCircle,
   ExternalLink,
+  Layers,
+  Compass,
 } from 'lucide-react';
 import { PlatformBadge } from '@/components/PlatformBadge';
 
@@ -24,14 +26,15 @@ export default function HomePage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '4.5rem' }}>
-      {/* HERO SECTION matching PDF Screenshot exactly */}
+      {/* Hero Section */}
       <section
+        className="animate-fade-in"
         style={{
           position: 'relative',
-          padding: '5rem 0 4rem 0',
+          padding: '5.5rem 0 4.5rem 0',
           textAlign: 'center',
           overflow: 'hidden',
-          background: 'radial-gradient(ellipse at 50% 10%, rgba(67, 97, 238, 0.25) 0%, rgba(7, 13, 30, 0) 70%)',
+          background: 'radial-gradient(ellipse at 50% 10%, rgba(67, 97, 238, 0.22) 0%, rgba(7, 13, 30, 0) 70%)',
         }}
       >
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
@@ -49,9 +52,10 @@ export default function HomePage() {
                 border: '1px solid rgba(76, 201, 240, 0.3)',
                 padding: '0.4rem 1rem',
                 borderRadius: '999px',
+                backdropFilter: 'blur(8px)',
               }}
             >
-              <Sparkles size={15} /> Powered by Google Gemini 1.5 Flash Pro
+              <Sparkles size={15} /> Powered by Google Gemini 1.5 Flash
             </span>
           </div>
 
@@ -68,7 +72,7 @@ export default function HomePage() {
             Pocket<span style={{ color: '#4cc9f0' }}>Smart</span>
           </h1>
 
-          {/* Subtitle matching doc */}
+          {/* Subtitle matching specification */}
           <h2
             style={{
               fontSize: 'clamp(1.25rem, 2.8vw, 2rem)',
@@ -81,7 +85,7 @@ export default function HomePage() {
             AI-Powered Budget Planning for Everyday Needs
           </h2>
 
-          {/* Descriptive text matching doc */}
+          {/* Descriptive text */}
           <p
             style={{
               maxWidth: '680px',
@@ -96,7 +100,7 @@ export default function HomePage() {
             money.
           </p>
 
-          {/* CTA Buttons matching doc screenshot */}
+          {/* CTA Buttons */}
           <div
             style={{
               display: 'flex',
@@ -141,7 +145,7 @@ export default function HomePage() {
               justifyContent: 'center',
               flexWrap: 'wrap',
               gap: '0.85rem',
-              opacity: 0.9,
+              opacity: 0.95,
             }}
           >
             <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>Cross-Platform Sourcing:</span>
@@ -156,8 +160,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* THREE SMART BUDGET PLANNERS (Exact replica of page 2-7 screenshot) */}
-      <section id="smart-planners" className="container" style={{ scrollMarginTop: '6rem' }}>
+      {/* Smart Budget Planners */}
+      <section id="smart-planners" className="container animate-fade-in-up" style={{ scrollMarginTop: '6rem' }}>
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <h2 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.4rem)', fontWeight: 800, marginBottom: '0.75rem' }}>
             Our Smart Budget Planners
@@ -167,7 +171,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* 3 Screenshot replica cards */}
+        {/* 3 Planner Cards */}
         <div className="grid-3">
           {/* Card 1: Home Interior */}
           <div className="screenshot-card">
@@ -184,7 +188,7 @@ export default function HomePage() {
                   color: '#ffffff',
                 }}
               >
-                <Home size={34} />
+                <Home size={32} />
               </div>
             </div>
             <div className="screenshot-card-body">
@@ -232,7 +236,7 @@ export default function HomePage() {
                   color: '#ffffff',
                 }}
               >
-                <PartyPopper size={34} />
+                <PartyPopper size={32} />
               </div>
             </div>
             <div className="screenshot-card-body">
@@ -248,7 +252,7 @@ export default function HomePage() {
                     Swiggy & Zomato
                   </span>
                   <span style={{ fontSize: '0.7rem', background: '#f1f5f9', padding: '3px 8px', borderRadius: '4px', color: '#475569' }}>
-                    OYO & Venues
+                    OYO Accommodations
                   </span>
                   <span style={{ fontSize: '0.7rem', background: '#f1f5f9', padding: '3px 8px', borderRadius: '4px', color: '#475569' }}>
                     Timeline Checklist
@@ -280,7 +284,7 @@ export default function HomePage() {
                   color: '#ffffff',
                 }}
               >
-                <Gem size={34} />
+                <Gem size={32} />
               </div>
             </div>
             <div className="screenshot-card-body">
@@ -292,14 +296,14 @@ export default function HomePage() {
               </p>
               <div style={{ marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid #e2e8f0' }}>
                 <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
-                  <span style={{ fontSize: '0.7rem', background: '#e0f2fe', color: '#0369a1', fontWeight: 600, padding: '3px 8px', borderRadius: '4px' }}>
-                    ★ Multimodal Image AI
+                  <span style={{ fontSize: '0.7rem', background: 'rgba(67, 97, 238, 0.12)', color: '#4361ee', fontWeight: 600, padding: '3px 8px', borderRadius: '4px' }}>
+                    Multimodal Vision AI
                   </span>
                   <span style={{ fontSize: '0.7rem', background: '#f1f5f9', padding: '3px 8px', borderRadius: '4px', color: '#475569' }}>
                     Tanishq & CaratLane
                   </span>
                   <span style={{ fontSize: '0.7rem', background: '#f1f5f9', padding: '3px 8px', borderRadius: '4px', color: '#475569' }}>
-                    Color Match
+                    Color Coordination
                   </span>
                 </div>
                 <Link
@@ -315,8 +319,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* INTERACTIVE BUDGET SIMULATION WIDGET */}
-      <section className="container">
+      {/* Interactive Budget Simulation */}
+      <section className="container animate-fade-in-up">
         <div
           className="glass-panel"
           style={{
@@ -327,13 +331,13 @@ export default function HomePage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem', alignItems: 'center' }}>
             <div>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#4cc9f0', fontSize: '0.85rem', fontWeight: 700, marginBottom: '0.75rem' }}>
-                <Sliders size={16} /> INTERACTIVE BUDGET SIMULATOR
+                <Sliders size={16} /> Dynamic Allocation Model
               </div>
               <h3 style={{ fontSize: '1.85rem', fontWeight: 800, marginBottom: '0.75rem', lineHeight: 1.25 }}>
-                See how AI optimizes your spending across real categories
+                Algorithmic budget optimization across categories
               </h3>
               <p style={{ color: '#94a3b8', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '1.75rem' }}>
-                Adjust the slider below to test PocketSmart’s algorithmic budget split. Our Gemini-powered engine dynamically balances quality, aesthetics, and affordability.
+                Adjust the target budget slider to preview PocketSmart’s automated distribution logic. The system balances quality tiers and price caps.
               </p>
 
               {/* Controls */}
@@ -344,30 +348,34 @@ export default function HomePage() {
                     <button
                       onClick={() => { setQuickCurrency('INR'); setQuickBudget(25000); }}
                       style={{
-                        padding: '3px 8px',
+                        padding: '3px 10px',
                         fontSize: '0.75rem',
+                        fontWeight: 600,
                         borderRadius: '6px',
                         background: quickCurrency === 'INR' ? '#4361ee' : 'transparent',
                         color: '#ffffff',
                         border: '1px solid rgba(255, 255, 255, 0.2)',
                         cursor: 'pointer',
+                        transition: 'all 0.2s ease',
                       }}
                     >
-                      ₹ INR
+                      INR (₹)
                     </button>
                     <button
                       onClick={() => { setQuickCurrency('USD'); setQuickBudget(800); }}
                       style={{
-                        padding: '3px 8px',
+                        padding: '3px 10px',
                         fontSize: '0.75rem',
+                        fontWeight: 600,
                         borderRadius: '6px',
                         background: quickCurrency === 'USD' ? '#4361ee' : 'transparent',
                         color: '#ffffff',
                         border: '1px solid rgba(255, 255, 255, 0.2)',
                         cursor: 'pointer',
+                        transition: 'all 0.2s ease',
                       }}
                     >
-                      $ USD
+                      USD ($)
                     </button>
                   </div>
                 </div>
@@ -388,10 +396,10 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Simulated AI Split Preview */}
+            {/* Simulated Allocation Breakdown */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div style={{ fontSize: '0.85rem', color: '#4cc9f0', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                Algorithmic Allocation Preview (Party Scenario)
+                Calculated Category Breakdown
               </div>
 
               {/* Item 1 */}
@@ -462,14 +470,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* HOW IT WORKS SECTION */}
+      {/* Methodology Section */}
       <section className="container">
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <h2 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.4rem)', fontWeight: 800, marginBottom: '0.75rem' }}>
-            How PocketSmart AI Works
+            System Architecture & Methodology
           </h2>
           <p style={{ color: '#94a3b8', fontSize: '1rem', maxWidth: '600px', margin: '0 auto' }}>
-            Transforming complex shopping decisions into effortless, budget-perfect experiences
+            Structured pipeline transforming user budget constraints into verified e-commerce recommendations
           </p>
         </div>
 
@@ -486,15 +494,15 @@ export default function HomePage() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginBottom: '1.25rem',
-                fontSize: '1.2rem',
+                fontSize: '1.1rem',
                 fontWeight: 800,
               }}
             >
               1
             </div>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.75rem' }}>Set Your Target Budget</h3>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.75rem' }}>Constraint Ingestion</h3>
             <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: 1.6 }}>
-              Define your upper spending limit, room types, guest counts, or occasion. No financial guesswork or endless manual spreadsheeting.
+              User parameters including upper price boundaries, room dimensions, guest counts, and occasions are validated against strict JSON schemas.
             </p>
           </div>
 
@@ -510,15 +518,15 @@ export default function HomePage() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginBottom: '1.25rem',
-                fontSize: '1.2rem',
+                fontSize: '1.1rem',
                 fontWeight: 800,
               }}
             >
               2
             </div>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.75rem' }}>Gemini AI Contextual Reasoning</h3>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.75rem' }}>Multimodal AI Reasoning</h3>
             <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: 1.6 }}>
-              Our multimodal engine analyzes aesthetic styles, dimensions, and even uploaded outfit photos to find pieces that truly harmonize.
+              Gemini 1.5 Flash processes structured inputs and base64 outfit images to evaluate color harmony, neckline geometry, and proportion balances.
             </p>
           </div>
 
@@ -534,21 +542,21 @@ export default function HomePage() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginBottom: '1.25rem',
-                fontSize: '1.2rem',
+                fontSize: '1.1rem',
                 fontWeight: 800,
               }}
             >
               3
             </div>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.75rem' }}>Direct Cross-Platform Links</h3>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.75rem' }}>Cross-Platform Sourcing</h3>
             <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: 1.6 }}>
-              Receive itemized lists with real-world prices across Amazon, Flipkart, IKEA, Swiggy, and Tanishq with 1-click buy or search links.
+              Sourced options across Amazon, Flipkart, IKEA, Swiggy, and Tanishq are mapped to price categories, guaranteeing zero budget overruns.
             </p>
           </div>
         </div>
       </section>
 
-      {/* WHY POCKETSMART STATS */}
+      {/* Metrics Section */}
       <section className="container">
         <div
           style={{
@@ -565,22 +573,22 @@ export default function HomePage() {
           <div>
             <div style={{ fontSize: '2.5rem', fontWeight: 800, color: '#4cc9f0', marginBottom: '0.35rem' }}>35%</div>
             <div style={{ color: '#ffffff', fontWeight: 600, fontSize: '1rem', marginBottom: '0.2rem' }}>Average Cost Savings</div>
-            <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>Compared to unguided impulse shopping</div>
+            <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>Compared to unguided manual retail shopping</div>
           </div>
           <div>
             <div style={{ fontSize: '2.5rem', fontWeight: 800, color: '#2ec4b6', marginBottom: '0.35rem' }}>100%</div>
             <div style={{ color: '#ffffff', fontWeight: 600, fontSize: '1rem', marginBottom: '0.2rem' }}>Budget Adherence</div>
-            <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>Algorithmic price caps ensure zero overspending</div>
+            <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>Algorithmic price caps ensure zero overruns</div>
           </div>
           <div>
             <div style={{ fontSize: '2.5rem', fontWeight: 800, color: '#f7b731', marginBottom: '0.35rem' }}>8+</div>
-            <div style={{ color: '#ffffff', fontWeight: 600, fontSize: '1rem', marginBottom: '0.2rem' }}>Integrated Platforms</div>
+            <div style={{ color: '#ffffff', fontWeight: 600, fontSize: '1rem', marginBottom: '0.2rem' }}>Platform Integrations</div>
             <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>Amazon, IKEA, Flipkart, Swiggy, Zomato, OYO</div>
           </div>
           <div>
             <div style={{ fontSize: '2.5rem', fontWeight: 800, color: '#4361ee', marginBottom: '0.35rem' }}>Multimodal</div>
-            <div style={{ color: '#ffffff', fontWeight: 600, fontSize: '1rem', marginBottom: '0.2rem' }}>Vision Intelligence</div>
-            <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>Outfit image analysis with Gemini 1.5 Flash</div>
+            <div style={{ color: '#ffffff', fontWeight: 600, fontSize: '1rem', marginBottom: '0.2rem' }}>Visual Analysis</div>
+            <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>Outfit image processing with Gemini 1.5 Flash</div>
           </div>
         </div>
       </section>

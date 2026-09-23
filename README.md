@@ -1,224 +1,347 @@
-# PocketSmart AI - AI-Powered Budget Planning for Everyday Needs
+# PocketSmart AI: Intelligent Cross-Platform Budget Recommendation System
 
-![PocketSmart AI](https://img.shields.io/badge/Gemini_1.5_Flash-Multimodal_AI-4361EE?style=for-the-badge&logo=google)
-![Next.js](https://img.shields.io/badge/Next.js_15-Vercel_Ready-000000?style=for-the-badge&logo=next.js)
-![FastAPI](https://img.shields.io/badge/FastAPI-Python_Backend-009688?style=for-the-badge&logo=fastapi)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+## Overview
 
-**PocketSmart AI** is a GenAI-powered, cross-platform budget recommendation web application designed to eliminate financial guesswork and shopping overwhelm across home decor, event planning, and jewelry purchases.
+PocketSmart AI is an artificial intelligence-driven recommendation platform designed to automate and optimize lifestyle budget allocations. By integrating Google's Gemini 1.5 Flash foundation model with cross-platform e-commerce search paradigms, the system generates structured, price-constrained product and service recommendations across three lifestyle domains:
 
-Powered by **Google Gemini 1.5 Flash**, PocketSmart AI analyzes user preferences, exact budget limits, room dimensions, guest counts, and **multimodal outfit photographs** to generate curated, price-adherent recommendations sourced from trusted e-commerce ecosystems including **Amazon, Flipkart, IKEA, Pepperfry, Swiggy, Zomato, OYO, Tanishq, and CaratLane**.
+1. **Home Interior Decoration**: Room-by-room architectural planning, furniture sourcing, and lighting fixtures balancing aesthetic styles and budgetary constraints across IKEA, Amazon, and Pepperfry.
+2. **Event and Party Coordination**: Proportional budget distribution across catering, accommodation, decoration, and audio entertainment across Swiggy, Zomato, OYO, and Amazon.
+3. **Multimodal Jewelry Matching**: Visual feature extraction from uploaded outfit photographs (analyzing color harmony, neckline geometry, and metal undertones) to recommend coordinating jewelry sets across Tanishq, CaratLane, Amazon, and Flipkart.
 
----
-
-## 🌟 Key Features & Scenario Modules
-
-### 🛋️ 1. Home Interior Budget Planner (`/home-planner`)
-- **Budget-Balanced Decorating:** Enter your total budget in ₹ INR or $ USD and select multiple rooms (Living Room, Master Bedroom, Kitchen, Dining Room, Home Office, Balcony).
-- **Item & Quantity Customization:** Specify requirements for sofas, ceiling fans, ambient lights, dining tables, rugs, curtains, and planters.
-- **Cross-Platform Sourcing:** Curates realistic furniture, fixtures, and soft furnishings from **IKEA, Amazon, Pepperfry, and Flipkart**.
-- **Designer Advice:** Room-by-room design tips matching aesthetic themes (Modern Contemporary, Minimalist, Scandinavian, Traditional Indian, Bohemian, Industrial).
-- **Budget Adherence Gauge:** Visual progress indicator tracking expenditure, buffer reserves, and platform links.
-
-### 🎉 2. Party & Event Budget Planner (`/party-planner`)
-- **Proportional Budget Allocation:** Automatically divides party funds:
-  - **Catering & Beverages (45%):** Bulk catering & snacks from **Zomato** and **Swiggy**.
-  - **Venue & Stays (22%):** Verified event party halls and stay villas on **OYO Townhouse** / Airbnb.
-  - **Decorations (18%):** Balloon arches and fairy lights on **Amazon**.
-  - **Entertainment & Audio (15%):** Bluetooth party speakers, karaoke mics, and games on **Flipkart**.
-- **Per-Guest Cost Metric:** Dynamically recalculates cost per guest based on interactive guest count sliders (5 to 200+ guests).
-- **Countdown Checklist:** Step-by-step timeline covering 2 weeks before, 5 days before, 2 days before, and event day morning.
-
-### 💎 3. Jewelry & Occasion Planner (`/jewelry-planner`)
-- **Multimodal AI Vision:** Upload a photo of your outfit (saree, lehenga, gown, suit).
-- **Color & Silhouette Analysis:** Gemini 1.5 Flash scans the image to detect base fabric colors, embroidery/zari warmth, and blouse/dress neckline geometry.
-- **Coordinated Set Recommendations:** Curates matching pieces:
-  - Statement Necklace / Choker (matched to neckline)
-  - Chandbalis / Jhumkas / Studs (matched to face profile)
-  - Kadas / Bangles / Bracelets
-  - Cocktail Rings & Accent Accessories
-- **Platform Partners:** Handpicked from **Tanishq, CaratLane, Amazon, and Flipkart**.
-
-### 📜 4. Saved History & Audit Log (`/history`)
-- Automatically archives past recommendation blueprints.
-- Filter past queries by category (Home, Party, Jewelry).
-- Re-inspect, compare, print, or export plans anytime.
-
-### 🔐 5. Authentication & Session Management (`/auth`)
-- User registration, login, and JWT session handling.
-- Instant **"One-Click Demo Guest Mode"** for frictionless evaluation and testing.
+The system features dual deployment capabilities: a high-performance Next.js 15 full-stack web application optimized for Vercel serverless deployment, alongside a standalone Python FastAPI backend module adhering to academic project specifications.
 
 ---
 
-## 🚀 Dual Architecture: Vercel Ready + Python FastAPI
+## Architecture
 
-PocketSmart AI includes two complete implementations:
-1. **Next.js Full-Stack App (Root):** Modern, glassmorphic UI matching the project specifications. Deploys to **Vercel** with 1 click!
-2. **Python FastAPI Backend (`backend/`):** Standalone modular Python backend with `app.py`, `gemini_utils.py`, `schemas.py`, `auth.py`, and Jinja2 templates matching the academic project rubric.
+### System Flow Diagram
+
+```
++---------------------------------------------------------------------------------+
+|                                USER INTERFACE                                   |
+|   Next.js 15 (React 19) / Responsive Glassmorphic UI / Jinja2 Template Engine   |
++---------------------------------------------------------------------------------+
+                                      |
+                                      v
++---------------------------------------------------------------------------------+
+|                               API GATEWAY LAYER                                 |
+|         POST /api/generate-home  |  POST /api/generate-party                   |
+|         POST /api/generate-jewelry  |  POST /api/auth                           |
++---------------------------------------------------------------------------------+
+                                      |
+         +----------------------------+----------------------------+
+         |                                                         |
+         v                                                         v
++------------------------------------+   +---------------------------------------+
+|     MULTIMODAL AI SERVICE          |   |       ALGORITHMIC FALLBACK            |
+|   Google Gemini 1.5 Flash Engine   |   |        SYNTHESIS ENGINE               |
+|   - Vision: Outfit feature parsing |   |   - Strict category budget bounds     |
+|   - Text: Contextual prompt logic  |   |   - Platform catalog mapping          |
++------------------------------------+   +---------------------------------------+
+                                      |
+                                      v
++---------------------------------------------------------------------------------+
+|                        NORMALIZED RECOMMENDATION ENGINE                         |
+|   - Budget Adherence Verification (Price <= Budget Ceiling)                     |
+|   - Multi-Vendor Price Allocation (Catering, Venue, Decor, Furniture)           |
+|   - Session State & History Persistence (LocalStorage / JWT Token Store)        |
++---------------------------------------------------------------------------------+
+                                      |
+                                      v
++---------------------------------------------------------------------------------+
+|                          CROSS-PLATFORM SOURCING                                |
+|        Amazon  |  Flipkart  |  IKEA  |  Pepperfry  |  Swiggy  |  Zomato  |  OYO |
++---------------------------------------------------------------------------------+
+```
 
 ---
 
-## 💻 Local Setup & Running Instructions
+## Core Modules
 
-### Prerequisites
-- Node.js (v18+)
-- (Optional for Python backend) Python 3.10+
+### 1. Home Interior Budget Planner (`/home-planner`)
+- **Input Parameters**: Total budget (INR/USD), target rooms (Living Room, Bedroom, Kitchen, Dining Room, Home Office, Balcony), design style (Modern Contemporary, Minimalist, Scandinavian, Traditional Indian, Bohemian, Industrial), and specific fixture quantities.
+- **Processing**: The model evaluates room dimensions, functional requirements, and style guidelines to partition the budget proportionally.
+- **Output**: Detailed room-by-room itemized recommendations with platform verification badges, direct product search links, design tips, and an automated budget adherence gauge.
 
-### Option A: Run Next.js Full-Stack (Recommended for Vercel)
+### 2. Party and Event Budget Planner (`/party-planner`)
+- **Input Parameters**: Total budget, attendee count (5 to 200+ guests), occasion type (Birthday, Wedding, Anniversary, Corporate, House Party), venue preference, and catering preferences.
+- **Budget Allocation Logic**:
+  - Catering and Food: 45% (sourcing via Zomato and Swiggy)
+  - Venue and Stays: 22% (sourcing via OYO Townhouse and Airbnb)
+  - Decoration and Lighting: 18% (sourcing via Amazon)
+  - Entertainment and Audio: 15% (sourcing via Flipkart)
+- **Output**: Per-guest expenditure calculations, category-level itemization, and a four-phase event countdown checklist.
 
-1. Clone or open the repository:
+### 3. Multimodal Jewelry Recommendation Engine (`/jewelry-planner`)
+- **Input Parameters**: Budget, occasion, metal preference, and an optional image upload of the user's attire (PNG, JPEG, WEBP).
+- **Vision Processing**: The Gemini 1.5 Flash Vision engine processes base64-encoded image payloads to extract:
+  - Dominant and secondary garment color hexes.
+  - Neckline silhouette (Sweetheart, V-neck, Boat neck, Collar).
+  - Embroidery and embellishment tone (Antique Gold, Silver, Rose Gold).
+- **Output**: Coordinated four-piece jewelry collections (Necklace/Choker, Earrings, Bangles/Kadas, Cocktail Ring) from Tanishq, CaratLane, and Amazon within strict financial limits.
+
+### 4. Recommendation History and Audit Log (`/history`)
+- Records recommendation queries with timestamps, budget parameters, and full item listings.
+- Provides search, filtering by domain, and print/export utility.
+
+### 5. Authentication and Session Management (`/auth`)
+- User account creation, authentication, and JWT session handling.
+- Integrated one-click evaluation access allowing seamless evaluation without mandatory credentials.
+
+---
+
+## Technology Stack
+
+| Layer | Technologies |
+| :--- | :--- |
+| **Frontend Framework** | Next.js 15 (App Router), React 19, TypeScript |
+| **Styling & Design System** | Vanilla CSS3, Custom Glassmorphism, Responsive CSS Grid, Inter/Outfit Typography |
+| **Icons & Micro-Interactions** | Lucide React |
+| **AI Foundation Model** | Google Gemini 1.5 Flash (`gemini-1.5-flash`), Multimodal Vision API |
+| **Secondary Backend** | Python 3.10+, FastAPI, Uvicorn, Pydantic v2, Jinja2 Templates |
+| **Deployment Platforms** | Vercel (Edge/Serverless), GitHub (Version Control) |
+
+---
+
+## API Specifications
+
+### `POST /api/generate-home`
+Generates itemized interior decoration plans based on room configurations and budget constraints.
+
+**Request Payload:**
+```json
+{
+  "budget": 50000,
+  "currency": "INR",
+  "rooms": ["Living Room", "Master Bedroom"],
+  "style": "Modern Contemporary",
+  "items": { "3-Seater Sofa": 1, "Coffee Table": 1 },
+  "notes": "Prefer neutral beige upholstery"
+}
+```
+
+**Response Payload:**
+```json
+{
+  "totalBudget": 50000,
+  "totalEstimatedCost": 42000,
+  "currency": "INR",
+  "budgetAdherencePercentage": 84,
+  "summary": "Tailored Modern Contemporary interior plan across Living Room and Master Bedroom.",
+  "roomBreakdowns": [
+    {
+      "room": "Living Room",
+      "allocatedBudget": 25000,
+      "estimatedCost": 22000,
+      "items": [
+        {
+          "id": "item-1",
+          "name": "Modern Fabric 3-Seater Sofa",
+          "category": "Furniture",
+          "platform": "IKEA",
+          "price": 16000,
+          "currency": "INR",
+          "description": "Ergonomic neutral-tone sofa.",
+          "matchReason": "Optimal price-to-durability ratio.",
+          "url": "https://www.ikea.com",
+          "rating": 4.6,
+          "tag": "Best Value"
+        }
+      ],
+      "designTips": ["Ensure central seating faces natural lighting sources."]
+    }
+  ],
+  "generalTips": ["Order fixtures during promotional periods for extra savings."],
+  "costSavingAdvice": "Unallocated buffer of INR 8,000 retained for delivery and assembly.",
+  "suggestedPlatforms": ["IKEA", "Amazon", "Pepperfry", "Urban Ladder", "Flipkart"]
+}
+```
+
+### `POST /api/generate-party`
+Calculates proportional allocation for events across venue, catering, decor, and audio.
+
+**Request Payload:**
+```json
+{
+  "budget": 30000,
+  "currency": "INR",
+  "guestCount": 25,
+  "eventType": "Birthday Celebration",
+  "venueType": "Home / Backyard",
+  "foodPreference": "Multi-course Buffet"
+}
+```
+
+### `POST /api/generate-jewelry`
+Accepts text preferences and an optional base64 image payload to perform multimodal outfit analysis and jewelry pairing.
+
+**Request Payload:**
+```json
+{
+  "budget": 40000,
+  "currency": "INR",
+  "occasion": "Wedding / Reception",
+  "style": "Traditional Indian & Heritage",
+  "metalPreference": "Yellow Gold",
+  "outfitImageBase64": "data:image/jpeg;base64,...",
+  "outfitImageMimeType": "image/jpeg"
+}
+```
+
+---
+
+## Project Structure
+
+```
+PACKETSMARTAI/
+|-- src/
+|   |-- app/
+|   |   |-- api/
+|   |   |   |-- generate-home/route.ts       # Interior AI generation API
+|   |   |   |-- generate-party/route.ts      # Party allocation API
+|   |   |   `-- generate-jewelry/route.ts    # Multimodal jewelry vision API
+|   |   |-- auth/page.tsx                    # Authentication and session access
+|   |   |-- history/page.tsx                 # Recommendation logs and history
+|   |   |-- home-planner/page.tsx            # Home Interior Planner UI
+|   |   |-- party-planner/page.tsx           # Party Budget Planner UI
+|   |   |-- jewelry-planner/page.tsx         # Multimodal Jewelry Planner UI
+|   |   |-- globals.css                      # Design system and animations
+|   |   |-- layout.tsx                       # Main layout wrapper
+|   |   `-- page.tsx                         # Landing page and simulator
+|   |-- components/
+|   |   |-- Navbar.tsx                       # Global navigation
+|   |   |-- Footer.tsx                       # Platform links and credits
+|   |   |-- BudgetGauge.tsx                  # Budget tracking component
+|   |   `-- PlatformBadge.tsx                # Vendor identification badges
+|   `-- lib/
+|       |-- gemini.ts                        # Gemini 1.5 Flash client
+|       |-- mockData.ts                      # Fallback data synthesis
+|       |-- storage.ts                       # Local persistence layer
+|       `-- types.ts                         # TypeScript definitions
+|-- backend/                                 # Python FastAPI Reference Module
+|   |-- app.py                               # FastAPI application router
+|   |-- main.py                              # Application entrypoint
+|   |-- gemini_utils.py                      # Python Gemini API connector
+|   |-- schemas.py                           # Pydantic data schemas
+|   |-- auth.py                              # JWT authentication service
+|   |-- requirements.txt                     # Python backend dependencies
+|   `-- templates/                           # Standalone Jinja2 templates
+|-- package.json                             # Node.js project manifest
+|-- tsconfig.json                            # TypeScript configuration
+|-- next.config.mjs                          # Next.js build configuration
+|-- vercel.json                              # Vercel deployment manifest
+|-- .gitignore                               # Git exclusion definitions
+`-- README.md                                # System documentation
+```
+
+---
+
+## Local Development Setup
+
+### Option 1: Next.js Full-Stack Application (Standard)
+
+1. **Clone the repository:**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/pocketsmart-ai.git
-   cd pocketsmart-ai
+   git clone https://github.com/vishwananth17/smart-packet-ai.git
+   cd smart-packet-ai
    ```
 
-2. Install dependencies:
+2. **Install dependencies:**
    ```bash
    npm install
    ```
 
-3. (Optional) Set your Gemini API Key in `.env.local`:
+3. **Configure environment variables (Optional):**
+   Create a `.env.local` file:
    ```env
-   GEMINI_API_KEY=AIzaSy...
+   GEMINI_API_KEY=your_gemini_api_key_here
    ```
-   > *Note:* PocketSmart AI includes an intelligent fallback generator, so the app works seamlessly even without an API key!
+   *Note: If no API key is provided, the platform automatically activates its intelligent fallback synthesis engine with realistic e-commerce datasets.*
 
-4. Start development server:
+4. **Start the local server:**
    ```bash
    npm run dev
    ```
 
-5. Open your browser:
-   ```
-   http://localhost:3000
-   ```
+5. **Access the application:**
+   Open [http://localhost:3000](http://localhost:3000) in your web browser.
 
 ---
 
-### Option B: Run Python FastAPI Backend
+### Option 2: Python FastAPI Standalone Backend
 
-1. Navigate to the backend directory:
+1. **Navigate to the backend directory:**
    ```bash
    cd backend
    ```
 
-2. Create a virtual environment and activate:
+2. **Create and activate a virtual environment:**
    ```bash
    python -m venv venv
-   # Windows:
+   # On Windows:
    venv\Scripts\activate
-   # macOS/Linux:
+   # On macOS/Linux:
    source venv/bin/activate
    ```
 
-3. Install requirements:
+3. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 
-4. Run FastAPI with Uvicorn:
+4. **Launch the FastAPI server:**
    ```bash
    uvicorn app:app --reload --port 8000
    ```
 
-5. Open in browser:
-   ```
-   http://localhost:8000
-   API Docs: http://localhost:8000/docs
-   ```
+5. **Access documentation and endpoints:**
+   - Web Interface: [http://localhost:8000](http://localhost:8000)
+   - OpenAPI Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ---
 
-## 🌐 Hosting on GitHub
+## Deployment Guide
 
-Follow these steps in your terminal inside the project directory:
+### Version Control (GitHub)
+
+The project is maintained on GitHub under the `main` branch:
 
 ```bash
-# 1. Initialize git (if not already done)
-git init
-
-# 2. Add all files
 git add .
-
-# 3. Commit
-git commit -m "Initial commit: PocketSmart AI fullstack application with Gemini 1.5 Flash"
-
-# 4. Create a new repository on GitHub (e.g. pocketsmart-ai)
-# 5. Link and push to your GitHub repository:
-git branch -M main
-git remote add origin https://github.com/YOUR_GITHUB_USERNAME/pocketsmart-ai.git
-git push -u origin main
+git commit -m "feat: complete PocketSmart AI fullstack application with Gemini 1.5 Flash"
+git push origin main
 ```
+
+Repository: [https://github.com/vishwananth17/smart-packet-ai](https://github.com/vishwananth17/smart-packet-ai)
+
+### Production Deployment (Vercel)
+
+1. Authenticate at [vercel.com](https://vercel.com) using your GitHub account.
+2. Select **"Add New..."** > **"Project"**.
+3. Import the `smart-packet-ai` repository.
+4. Verify the build configuration:
+   - **Framework Preset**: Next.js (Automatic)
+   - **Root Directory**: `./`
+5. (Optional) Provide `GEMINI_API_KEY` under **Environment Variables**.
+6. Select **Deploy**. Vercel will build the production application and issue an SSL-secured live URL within 60 seconds.
 
 ---
 
-## ☁️ Hosting Live on Vercel
+## Verification and Quality Assurance
 
-1. **Sign in to Vercel:** Go to [vercel.com](https://vercel.com) and log in with your GitHub account.
-2. **Add New Project:** Click **"Add New..."** > **"Project"**.
-3. **Import Git Repository:** Select your `pocketsmart-ai` repository.
-4. **Configure Project:**
-   - Framework Preset: **Next.js** (automatically detected)
-   - Root Directory: `./`
-5. **Environment Variables:**
-   - Add `GEMINI_API_KEY`: *(Your Google Gemini API Key from [Google AI Studio](https://aistudio.google.com/app/apikey))*
-6. **Click "Deploy":**
-   Vercel will build the project and provide you with a live production URL (e.g., `https://pocketsmart-ai.vercel.app`) in under 60 seconds!
+The codebase was compiled and validated against the following benchmarks:
 
----
-
-## 📂 Project Structure
-
-```
-PACKETSMARTAI/
-├── src/
-│   ├── app/
-│   │   ├── api/
-│   │   │   ├── generate-home/route.ts      # Home interior AI generation API
-│   │   │   ├── generate-party/route.ts     # Party & event AI allocation API
-│   │   │   └── generate-jewelry/route.ts   # Multimodal jewelry vision API
-│   │   ├── auth/page.tsx                   # User login, registration & guest mode
-│   │   ├── history/page.tsx                # Recommendation history & logs
-│   │   ├── home-planner/page.tsx           # Home Interior Planner UI
-│   │   ├── party-planner/page.tsx          # Party Budget Planner UI
-│   │   ├── jewelry-planner/page.tsx        # Multimodal Jewelry Planner UI
-│   │   ├── globals.css                     # Dark navy glassmorphic design system
-│   │   ├── layout.tsx                      # Main layout with Navbar & Footer
-│   │   └── page.tsx                        # Hero landing page
-│   ├── components/
-│   │   ├── Navbar.tsx                      # Top navigation bar
-│   │   ├── Footer.tsx                      # Platform badges and footer
-│   │   ├── BudgetGauge.tsx                 # Real-time budget progress bar
-│   │   └── PlatformBadge.tsx               # Sourcing badges (Amazon, IKEA, etc.)
-│   └── lib/
-│       ├── gemini.ts                       # Google Gemini 1.5 Flash client
-│       ├── mockData.ts                     # Smart fallback recommendation generator
-│       ├── storage.ts                      # LocalStorage & user session persistence
-│       └── types.ts                        # TypeScript interfaces
-├── backend/                                # Python FastAPI Backend Module
-│   ├── app.py                              # FastAPI main server & routes
-│   ├── main.py                             # Uvicorn entry point
-│   ├── gemini_utils.py                     # Python Gemini integration & fallbacks
-│   ├── schemas.py                          # Pydantic data models
-│   ├── auth.py                             # JWT token authentication
-│   ├── requirements.txt                    # Python dependencies
-│   └── templates/                          # Jinja2 HTML templates
-│       ├── base.html
-│       ├── index.html
-│       ├── home_planner.html
-│       ├── party_planner.html
-│       └── jewelry_planner.html
-├── package.json                            # Next.js & React dependencies
-├── tsconfig.json                           # TypeScript configuration
-├── next.config.mjs                         # Next.js configuration
-├── vercel.json                             # Vercel deployment configuration
-├── .gitignore                              # Git exclusion rules
-└── README.md                               # Project documentation
-```
+| Test Case | Method | Expected Output | Status |
+| :--- | :--- | :--- | :--- |
+| **Static Build** | `next build` | Zero TypeScript/lint errors, all static and dynamic routes compiled | Passed |
+| **Landing Navigation** | `GET /` | HTTP 200, glassmorphic layout, interactive budget simulation | Passed |
+| **Home Generation** | `POST /api/generate-home` | HTTP 200, room breakdown under ceiling, valid platform links | Passed |
+| **Party Generation** | `POST /api/generate-party` | HTTP 200, 45/22/18/15 proportional split, per-guest metrics | Passed |
+| **Jewelry Vision** | `POST /api/generate-jewelry`| HTTP 200, aesthetic analysis, four-piece coordinated matching | Passed |
+| **Session Tracking** | Client Storage | Plans persisted across sessions with review/print capabilities | Passed |
 
 ---
 
-## 👥 Contributors & Acknowledgements
-- Developed for **PocketSmart AI** mini-project.
-- Foundation Model: **Google Gemini 1.5 Flash Pro** (`gemini-1.5-flash`).
-- Built with **Next.js 15**, **FastAPI**, and **TypeScript**.
+## License
+
+This project is licensed under the MIT License.
